@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tshop.dao.UserMapper">
+
+    <cache/>
+
+    <select id="getUserByUsername" resultType="User">
+    SELECT
+         u.user_id,
+         u.username,
+         u.password,
+         u.nickname,
+         u.status,
+         u.country,
+         u.state,
+         u.city,
+         u.zip,
+         u.address,
+         u.phone,
+         u.email
+    FROM User u
+    WHERE u.username = #{username}
+  </select>
+
+    <select id="getUserByUsernameAndPassword" resultType="User">
+     SELECT
+         u.user_id,
+         u.username,
+         u.password,
+         u.nickname,
+         u.status,
+         u.country,
+         u.state,
+         u.city,
+         u.zip,
+         u.address,
+         u.phone,
+         u.email
+    FROM User u
+    WHERE u.username = #{username} and u.password = #{password}
+  </select>
+
+    <update id="updateUser" parameterType="User">
+    UPDATE ACCOUNT SET
+        username = #{username},
+        password = #{password},
+        nickname = #{nickname},
+        status = #{status},
+        country = #{country},
+        state = #{state},
+        city = #{city},
+        zip = #{zip},
+        address = #{address},
+        phone = #{phone},
+        email = #{email}
+    WHERE user_id = #{username}
+  </update>
+
+    <insert id="insertUser" parameterType="User">
+    INSERT INTO user
+      (user_id,username,password,nickname,status,country,state,city,zip,address,phone,email)
+    VALUES
+      (#{userId},#{username},#{password},#{nickname},#{status},#{country},#{state},#{city},#{zip},#{address},#{phone},#{email})
+  </insert>
+</mapper>

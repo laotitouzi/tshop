@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tshop.dao.ProductMapper">
+
+  <cache />
+
+  <select id="getProduct" resultType="Product">
+    SELECT
+      PRODUCT_ID as productId,
+      CATEGORY_ID as categoryId,
+      PRODUCT_NAME as productName,
+      PRICE,
+      DESCRIPTION,
+      DISCOUNT
+    FROM PRODUCT
+    WHERE PRODUCT_ID = #{productId}
+  </select>
+
+  <select id="getProductListByCategory" resultType="Product">
+    SELECT
+       PRODUCT_ID as productId,
+      CATEGORY_ID as categoryId,
+      PRODUCT_NAME as productName,
+      PRICE,
+      DESCRIPTION,
+      DISCOUNT
+    FROM PRODUCT
+    WHERE CATEGORY_ID = #{categoryId}
+  </select>
+
+  <select id="searchProductList" resultType="Product">
+    select
+      PRODUCT_ID as productId,
+      CATEGORY_ID as categoryId,
+      PRODUCT_NAME as productName,
+      PRICE,
+      DESCRIPTION,
+      DISCOUNT
+    from PRODUCT
+    WHERE lower(PRODUCT_NAME) like #{value}
+  </select>
+
+  <insert id="insertProduct" parameterType="Product">
+    insert into product (  PRODUCT_ID,CATEGORY_ID ,PRODUCT_NAME ,PRICE,    DESCRIPTION,      DISCOUNT)
+    values (#{productId},#{categoryId},#{productName},#{price},#{description},#{discount})
+  </insert>
+
+  <update id="updateProduct" parameterType="Product">
+    update product set
+    PRODUCT_ID = #{productId},
+    CATEGORY_ID =#{categoryId},
+    PRODUCT_NAME = #{productName} ,
+    PRICE = #{price},
+    DESCRIPTION = #{description},
+    DISCOUNT = #{discount})
+   where product_id = #{product_id}
+  </update>
+</mapper>
