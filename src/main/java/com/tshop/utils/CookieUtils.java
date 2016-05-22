@@ -49,22 +49,5 @@ public class CookieUtils {
         return null;
     }
 
-    public static void main(String[] args) {
-        HttpServletResponse response = new MockHttpServletResponse();
-        HttpServletRequest request = new MockHttpServletRequest();
-        User user = new User();
-        user.setUsername("zhangsan");
-        String content = JsonUtils.toJSONString(user);
-        addCookie(response, "cookie1", content, "/", 60 * 60 * 24 * 7);
 
-
-     /*   Cookie co = getCookieByName(request,"cookie1");
-
-        String content2 = co.getValue();
-        //TODO 解密
-        User  u  = JsonUtils.parse(content2,User.class);
-
-        System.out.print(u.getUsername());*/
-        //TODO 加密
-    }
 }
