@@ -1,52 +1,31 @@
 <#if Session.shopUser?exists>
     <#assign user = Session.shopUser >
 </#if>
-<div class="gheader-wp">
-    <div class="gheader-wp-b gclear">
-        <div class="index-unlogin">
-            <div class="homegheader" id="gheader">
-                <a class="gheader-logo gfl" id="guokrLogo" href="" title="">adsfsda</a>
-                <ul class="gnav gfl">
-                    <li><a href="/">首页</a></li>
-                    <li><a href="">adsfds</a></li>
-                    <li><a href="">adsf</a></li>
-                </ul>
-                <form id="search" class="gh-search gh-search-unlogin gfr" action="" method="get" target="_blank">
-                    <p>
-                        <input id="searchTxt" class="gh-search-txt" type="text" value="" placeholder=""
-                               maxlength="30" name="wd">
-                        <input class="gnicon-search" type="submit" value="搜索">
-                    </p>
-                </form>
-            </div>
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">首页</a>
         </div>
-
-        <div class="unlogin-wrapper">
-            <div class="homegheader unlogin-nav">
-
-                <div class="gheader-ext">
-                    <p>现在加入asdfdas，一起记录科技新时代</p>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
                 <#if user?exists>
-                    <a href="/user/info">${user.username!}</a>
-                    <a href="/user/dologout">退出登录</a>
+                   <li> <a href="/user/info">${user.username!}</a></li>
+                   <li><a href="/user/dologout">退出登录</a></li>
                 <#else>
-                    <a rel="nofollow" href="/user/register">立即注册</a>
-                    <a rel="nofollow" href="/user/login">用户登录</a>
+                    <li> <a rel="nofollow" href="/user/register">注册</a></li>
+                    <li> <a rel="nofollow" href="/user/login">登录</a></li>
                 </#if>
-
-                </div>
-                <div class="gheader-i">
-                    联合登录：
-                    <a class="gicon-sweixin" href="" title="用微信帐号登录"></a>
-                    <a class="gicon-ssina" href="" title="用新浪微博帐号登录"></a>
-                    <a href="" title="用QQ帐号登录" class="gicon-sqq"></a>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="top-ads" id="topAds" style="display: none;">
-        <a href="javascript:void 0;" class="closeAds close-ads" data-flag="ads_close_hometop" data-pathname="/"
-           data-gaevent="home_close_topads:v1.1.1.1:closeads" data-version="v1.1.1.1"></a>
-        <div id="bdadm-624083" class="topAds"></div>
-    </div>
+        <div>
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+        </div>
+    </nav>
 </div>

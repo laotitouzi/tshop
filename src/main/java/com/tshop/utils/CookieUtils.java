@@ -1,10 +1,6 @@
 package com.tshop.utils;
 
-import com.tshop.entity.User;
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jetty.server.Authentication;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

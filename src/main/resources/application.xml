@@ -67,6 +67,7 @@
 		<property name="exposeRequestAttributes" value="true" />
 		<property name="exposeSessionAttributes" value="true" />
 		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="requestContextAttribute" value="rc"></property>
 	</bean>
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
