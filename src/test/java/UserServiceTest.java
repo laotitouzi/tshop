@@ -18,7 +18,7 @@ public class UserServiceTest {
 	@Test
 	public void insert() {
 		User u = new User();
-		u.setUserId(1);
+		u.setUserId(3);
 		u.setUsername("zhangsan");
 		u.setPassword("123");
 		u.setAddress("hangzhou");
@@ -35,5 +35,25 @@ public class UserServiceTest {
 
 
 		//productService.sendObject(destination, u);
+	}
+
+
+	@Test
+	public void getUserById(){
+		User u = userService.getUserById("3");
+	/*	u.setUsername("我是你爷爷");
+
+		userService.updateUser(u);*/
+		System.out.println(u.getZip());
+	}
+
+
+	@Test
+	public void getUserByNameAndPass(){
+		User u = userService.getUser("zhangsan","123");
+	/*	u.setUsername("我是你爷爷");
+
+		userService.updateUser(u);*/
+		System.out.println(u.getZip());
 	}
 }

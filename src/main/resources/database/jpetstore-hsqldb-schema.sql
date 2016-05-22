@@ -18,22 +18,22 @@ create table product (
 );
 create index index_product_name on product (product_name);
 
-drop table if EXISTS   user;
-create table user (
-  user_id varchar(80) not null ,
-  username varchar(80) not null ,
-  password varchar(80) not null ,
-  nickname varchar(80) not null ,
-  status varchar(2) not null ,
-  country varchar(80) not null ,
-  state varchar(80) not null ,
-  city varchar(80) not null ,
-  zip varchar(80) not null ,
-  address varchar(80) not null ,
-  phone varchar(80) not null ,
-  email varchar(80) not null ,
-  constraint pk_account primary key (user_id)
-);
+  drop table if EXISTS   user;
+  create table user (
+    user_id varchar(80) not null ,
+    username varchar(80) not null ,
+    password varchar(80) not null ,
+    nickname varchar(80) not null ,
+    status varchar(2) not null ,
+    country varchar(80) not null ,
+    state varchar(80) not null ,
+    city varchar(80) not null ,
+    zip varchar(80) not null ,
+    address varchar(80) not null ,
+    phone varchar(80) not null ,
+    email varchar(80) not null ,
+    constraint pk_account primary key (user_id)
+  );
 
 create table orders (
       order_id  varchar(80) not null ,
@@ -57,7 +57,7 @@ create table orderstatus (
       linenum int not null,
       timestamp date not null,
       status varchar(2) not null,
-      constraint pk_orderstatus primary key (orderid, linenum)
+      constraint pk_orderstatus primary key (order_id, linenum)
 );
 
 create table lineitem (

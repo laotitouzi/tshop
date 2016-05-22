@@ -21,6 +21,14 @@ public class ProductService {
         return productMapper.getProduct(productId);
     }
 
+    public List<Product> getHotProducts(){
+        return productMapper.getHotProducts();
+    }
+
+    public List<Product> getProductsByCategorId(String id){
+        return productMapper.getProductListByCategory(id);
+    }
+
     @Transactional
     public void insertProduct(Product product){
         productMapper.insertProduct(product);

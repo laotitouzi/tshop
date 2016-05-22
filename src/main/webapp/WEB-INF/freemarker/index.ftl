@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title></title>
     <meta name="Keywords" content="">
-    <meta http-equiv="mobile-agent" content="format=html5; url=http://m.guokr.com/">
-    <link rel="stylesheet" type="text/css" href="../css/gui.css">
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <meta http-equiv="mobile-agent" content="">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css">
+
 <body style="zoom: 1;">
 <div class="container ">
-   <#include "head.html">
+   <#include "head.ftl">
     <div class="grow gclear index-page">
         <div class="main">
             <div class="gbtitle">
@@ -49,28 +50,16 @@
                 </div>
                 <div class="recos-article">
                     <ul class="gclear">
-
+                    <#list products?if_exists as product>
                         <li class="stress">
-                            <h2><a href="test" title="test" target="_blank">test</a></h2>
+                              <h2><a href="test" title="test" target="_blank"> ${product.productName!} </a></h2>
                         </li>
-                        <li class="stress">
-                            <h2><a href="test" title="test" target="_blank">test</a></h2>
-                        </li>
-                        <li class="stress">
-                            <h2><a href="test" title="test" target="_blank">test</a></h2>
-                        </li>
-                        <li class="stress">
-                            <h2><a href="test" title="test" target="_blank">test</a></h2>
-                        </li>
-                        <li class="stress">
-                            <h2><a href="test" title="test" target="_blank">test</a></h2>
-                        </li>
-                        <li class="stress">
-                            <h2><a href="test" title="test" target="_blank">test</a></h2>
-                        </li>
+                    </#list>
                     </ul>
                 </div>
             </div>
+
+           <#-- 下面新开一行显示-->
             <div class="gbtitle post-pop">
                 <h1>小组热帖</h1>
                 <div class="gbtitle-advert">
@@ -82,7 +71,11 @@
                     <div class="content">
                         <h2 class="content-title">科技</h2>
                         <ul>
-                            <li><a href="t" target="_blank" title="aaaa">ddd</a></li>
+                        <#list products?if_exists as product>
+                            <li class="stress">
+                                <a href="test" title="test" target="_blank"> ${product.productName!} </a>
+                            </li>
+                        </#list>
                         </ul>
                     </div>
                 </div>
@@ -90,7 +83,11 @@
                     <div class="content">
                         <h2 class="content-title">生活</h2>
                         <ul>
-                            <li><a href="t" target="_blank" title="aaaa">dddd</a></li>
+                        <#list products?if_exists as product>
+                            <li class="stress">
+                                <a href="test" title="test" target="_blank"> ${product.productName!} </a>
+                            </li>
+                        </#list>
                         </ul>
                     </div>
                 </div>
@@ -107,6 +104,12 @@
                     <li><b class="prefix-dot"></b><a href="" title="" target="_blank">test</a></li>
                     <li><b class="prefix-dot"></b><a href="" title="" target="_blank">test</a></li>
                     <li><b class="prefix-dot"></b><a href="" title="" target="_blank">test</a></li>
+
+                <#list products?if_exists as product>
+                    <li class="stress">
+                       <b class="prefix-dot"></b><a href="test" title="test" target="_blank"> ${product.productName!} </a>
+                    </li>
+                </#list>
                 </ul>
             </div>
         </div>

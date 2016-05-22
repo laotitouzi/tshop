@@ -6,9 +6,27 @@
 
     <cache/>
 
+    <select id="getUserById" resultType="User">
+        SELECT
+        u.user_id as userId,
+        u.username,
+        u.password,
+        u.nickname,
+        u.status,
+        u.country,
+        u.state,
+        u.city,
+        u.zip,
+        u.address,
+        u.phone,
+        u.email
+        FROM User u
+        WHERE u.user_id = #{userId}
+    </select>
+
     <select id="getUserByUsername" resultType="User">
     SELECT
-         u.user_id,
+         u.user_id as userId,
          u.username,
          u.password,
          u.nickname,
@@ -24,9 +42,9 @@
     WHERE u.username = #{username}
   </select>
 
-    <select id="getUserByUsernameAndPassword" resultType="User">
+    <select id="getUserByUsernameAndPassword"  parameterType="String"  resultType="User">
      SELECT
-         u.user_id,
+         u.user_id as userId,
          u.username,
          u.password,
          u.nickname,
@@ -43,7 +61,7 @@
   </select>
 
     <update id="updateUser" parameterType="User">
-    UPDATE ACCOUNT SET
+    UPDATE user SET
         username = #{username},
         password = #{password},
         nickname = #{nickname},
@@ -55,7 +73,7 @@
         address = #{address},
         phone = #{phone},
         email = #{email}
-    WHERE user_id = #{username}
+    WHERE user_id = #{userId}
   </update>
 
     <insert id="insertUser" parameterType="User">

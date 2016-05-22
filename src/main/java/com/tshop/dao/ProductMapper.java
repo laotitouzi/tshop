@@ -16,4 +16,6 @@ public interface ProductMapper {
   void insertProduct(Product product);
 
   void updateProduct(Product product);
+
+  List<Product> getHotProducts();
 }

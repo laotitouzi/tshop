@@ -123,7 +123,7 @@
 }
 
 .gheader-wp .gheader-i .gicon-sweixin, .gheader-wp .gheader-i .gicon-ssina, .gheader-wp .gheader-i .gicon-srr, .gheader-wp .gheader-i .gicon-sqq, .gheader-wp .gheader-i .gicon-sdouban {
-    background: url('imgs/4-icon.png') no-repeat;
+    background: url('./../imgs/4-icon.png') no-repeat;
     width: 25px;
     height: 25px;
     display: inline-block;
@@ -894,7 +894,7 @@ div.grow {
 }
 
 .side-link a.weixin span {
-    background: url(/skin/imgs/weixin-icon.png) center center no-repeat
+    background: url(./../imgs/weixin-icon.png) center center no-repeat
 }
 
 .side-link a.weixin:hover {

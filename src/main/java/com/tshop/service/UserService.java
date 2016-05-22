@@ -32,5 +32,7 @@ public class UserService {
     public void updateUser(User User) {
         UserMapper.updateUser(User);
     }
-
+    public User getUserById(String userId) {
+        return  UserMapper.getUserById(userId);
+    }
 }
