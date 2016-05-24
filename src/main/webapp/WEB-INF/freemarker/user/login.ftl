@@ -29,7 +29,7 @@
             <label for="username">用户名</label>
             <div class="inline-block">
                 <input type="text" class="form-control width1" id="username" name="username" placeholder="用户名"
-                       minlength="5" required email="true">
+                       minlength="5" required>
             </div>
         </div>
         <div class="form-group">
