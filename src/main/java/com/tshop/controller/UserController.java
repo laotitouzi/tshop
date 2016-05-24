@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tshop.service.UserService;
+import com.tshop.token.Token;
 import com.tshop.utils.Config;
 import com.tshop.utils.CookieUtils;
 import com.tshop.utils.JsonUtils;
@@ -28,14 +29,16 @@ public class UserController {
     @Autowired
     public UserService userService;
 
+    @Token(save=true)
     @RequestMapping("/register")
     public String register() {
-        return "register";
+        return "/user/register";
     }
 
+    @Token(save=true)
     @RequestMapping("/login")
     public String login() {
-        return "login";
+        return "/user/login";
     }
 
 
@@ -99,5 +102,16 @@ public class UserController {
     @RequestMapping("/list")
     public String list(Map<String, Object> map) {
         return "/user/success";
+    }
+
+    @Token(save=true)
+    @RequestMapping("/forgetpasswd")
+    public String forgetPasswd(){
+        return "/user/forgetpasswd";
+    }
+
+    @RequestMapping("/dogetpasswd")
+    public String doGetasswd(){
+        return "/user/forgetpasswd";
     }
 }

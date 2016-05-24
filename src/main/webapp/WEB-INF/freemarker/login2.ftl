@@ -67,7 +67,7 @@
 
         </div>
     </div>
-<#include "botton.html"/>
+<#include "common/botton.html"/>
 </div>
 </body>
 </html>

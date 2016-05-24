@@ -13,7 +13,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class TokenInterceptor extends HandlerInterceptorAdapter {
 
-
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HandlerMethod handlerMethod = (HandlerMethod) handler;

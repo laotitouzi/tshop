@@ -81,11 +81,12 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:mapping path="/admin/**" />
-
 			<mvc:exclude-mapping path="/user/login"/>
 			<mvc:exclude-mapping path="/user/register"/>
 			<mvc:exclude-mapping path="/user/dologin"/>
 			<mvc:exclude-mapping path="/user/dologout"/>
+			<mvc:exclude-mapping path="/user/forgetpasswd"/>
+			<mvc:exclude-mapping path="/user/dogetpasswd"/>
 			<mvc:exclude-mapping path="/user/doregister"/>
 			<mvc:exclude-mapping path="/css/**"/>
 			<mvc:exclude-mapping path="/img/**"/>
@@ -93,11 +94,15 @@
 			<bean class="com.tshop.token.LoginInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/" />
+			<mvc:mapping path="/user/login"/>
+			<mvc:mapping path="/user/forgetpasswd"/>
+			<mvc:mapping path="/user/register" />
 			<bean class="com.tshop.token.TokenInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/save" />
+			<mvc:mapping path="/user/dologin"/>
+			<mvc:mapping path="/user/doregister"/>
+			<mvc:mapping path="/user/dogetpasswd"/>
 			<bean class="com.tshop.token.TokenValidInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

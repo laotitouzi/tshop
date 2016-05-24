@@ -1,6 +1,9 @@
 <#if Session.shopUser?exists>
     <#assign user = Session.shopUser >
 </#if>
+<#if Session.token?exists>
+    <#assign token = Session.token >
+</#if>
 <div class="container">
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
