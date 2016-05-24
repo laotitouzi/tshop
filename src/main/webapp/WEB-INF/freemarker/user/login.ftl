@@ -5,6 +5,7 @@
     <script type="text/javascript">
         function changeMe(div) {
         $("#capImg").attr("src", "${rc.contextPath}/drawImage?t="+new Date().getTime());
+            alert($.md5($.md5("123456")));
         }
     </script>
 </head>
