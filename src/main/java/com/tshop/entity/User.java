@@ -1,5 +1,12 @@
 package com.tshop.entity;
 
+
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 /**
  * @author Han, Tixiang 2016年5月7日
@@ -10,7 +17,10 @@ public class User implements Serializable {
   private static final long serialVersionUID = 8751282105532159742L;
 
   private long userId;
+  @NotEmpty(message = "用户名不能为空")
   private String username;
+
+  @NotEmpty(message = "密码不能为空")
   private String password;
   private String nickname;
   private String status;

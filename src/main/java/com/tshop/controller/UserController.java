@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import com.tshop.service.UserService;
 import com.tshop.token.Token;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tshop.entity.User;
@@ -43,12 +45,17 @@ public class UserController {
 
 
     @RequestMapping("/dologin")
-    public String doLogin(HttpServletRequest request, HttpServletResponse response, User user, boolean rememberMe) {
+    public String doLogin(HttpServletRequest request, HttpServletResponse response, @Valid User user, String code , boolean rememberMe,BindingResult result) {
         if (user == null) {
             return "redirect:/user/login";
         }
 
-        if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+        if(result.hasErrors()){
+            return "redirect:/user/login";
+        }
+
+
+        if(!request.getSession().getAttribute("checkcode").equals(code)){
             return "redirect:/user/login";
         }
         User realUser = userService.getUser(user.getUsername(), user.getPassword());
