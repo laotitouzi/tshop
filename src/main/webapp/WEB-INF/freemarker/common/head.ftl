@@ -1,6 +1,9 @@
 <#if Session.shopUser?exists>
     <#assign user = Session.shopUser >
 </#if>
+<#if Session.errors?exists>
+    <#assign errors = Session.errors >
+</#if>
 <#if Session.token?exists>
     <#assign token = Session.token >
 </#if>

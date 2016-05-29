@@ -1,7 +1,7 @@
 package com.tshop.token;
 
 import com.tshop.entity.User;
-import com.tshop.utils.Config;
+import com.tshop.utils.Constant;
 import com.tshop.utils.CookieUtils;
 import com.tshop.utils.JsonUtils;
 import org.springframework.util.Base64Utils;
@@ -21,17 +21,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		User  user  = null;
-        user = (User) request.getSession().getAttribute(Config.SESSION_NAME_LOGIN_USER);
+        user = (User) request.getSession().getAttribute(Constant.SESSION_NAME_LOGIN_USER);
 
 		if(user!=null){
 			return true;
 		}
-        Cookie cookie = CookieUtils.getCookieByName(request,Config.TSHOP_COOKIE_NAME);
+        Cookie cookie = CookieUtils.getCookieByName(request, Constant.TSHOP_COOKIE_NAME);
         if(cookie!=null){
             String content = new String(Base64Utils.decode(cookie.getValue().getBytes("UTF-8")));
              user  = JsonUtils.parse(content,User.class);
             if(user!=null){
-                request.getSession().setAttribute(Config.SESSION_NAME_LOGIN_USER,user);
+                request.getSession().setAttribute(Constant.SESSION_NAME_LOGIN_USER,user);
                 return  true;
             }
         }

@@ -1,128 +1,131 @@
 package com.tshop.entity;
 
 
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+
 /**
  * @author Han, Tixiang 2016年5月7日
- *
  */
 public class User implements Serializable {
 
-  private static final long serialVersionUID = 8751282105532159742L;
+    private static final long serialVersionUID = 8751282105532159742L;
 
-  private long userId;
-  @NotEmpty(message = "用户名不能为空")
-  private String username;
+    private long userId;
+    @NotEmpty(message = "用户名不能为空")
+    @Length(max = 30,message = "用户名不能超过30字符")
+    private String username;
 
-  @NotEmpty(message = "密码不能为空")
-  private String password;
-  private String nickname;
-  private String status;
-  private String country;
-  private String state;
-  private String city;
-   private String zip;
-  private String address;
-  private String phone;
-  private String email;
-  public String getUsername() {
-    return username;
-  }
+    @NotEmpty(message = "密码不能为空")
+    @Length (min = 6,message = "密码长度至少6位")
+    private String password;
+    private String nickname;
+    private String status;
+    private String country;
+    private String state;
+    private String city;
+    private String zip;
+    private String address;
+    private String phone;
+    private String email;
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public String getStatus() {
-    return status;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
-  public void setUserId(long userId) {
-    this.userId = userId;
-  }
+    public String getStatus() {
+        return status;
+    }
 
-  public long getUserId() {
-    return userId;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
-  }
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+    public long getUserId() {
+        return userId;
+    }
 
-  public String getNickname() {
-    return nickname;
-  }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-  public String getAddress() {
-    return address;
-  }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-  public String getCity() {
-    return city;
-  }
+    public String getNickname() {
+        return nickname;
+    }
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+    public String getAddress() {
+        return address;
+    }
 
-  public String getState() {
-    return state;
-  }
+    public String getCity() {
+        return city;
+    }
 
-  public void setState(String state) {
-    this.state = state;
-  }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-  public String getZip() {
-    return zip;
-  }
+    public String getState() {
+        return state;
+    }
 
-  public void setZip(String zip) {
-    this.zip = zip;
-  }
+    public void setState(String state) {
+        this.state = state;
+    }
 
-  public String getCountry() {
-    return country;
-  }
+    public String getZip() {
+        return zip;
+    }
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
 
-  public String getPhone() {
-    return phone;
-  }
+    public String getCountry() {
+        return country;
+    }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

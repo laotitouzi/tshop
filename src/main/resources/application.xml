@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
@@ -13,111 +13,153 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
       http://www.springframework.org/schema/aop 
     http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
-	<!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
-	<context:property-placeholder location="classpath*:*.properties" />
-	<import resource="application_single_db.xml"/>
+    <!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
+    <context:property-placeholder location="classpath*:*.properties"/>
+    <import resource="application_single_db.xml"/>
 
-	<mvc:annotation-driven />
-	<tx:annotation-driven />
-	<aop:aspectj-autoproxy />
-	 <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		 <property name="locations">
-			 <list>
-				 <value>classpath:jdbc.properties</value>
-				<value>classpath:redis.properties</value>
-			 </list>
-		 </property>
-	 </bean>
-	<!-- 自动扫描的包名 -->
-	<context:component-scan
-		base-package="com.tshop.service,com.tshop.controller,com.tshop.log,com.tshop.dao" />
+    <mvc:annotation-driven>
+       <!-- <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg value="text" />
+                            <constructor-arg value="plain" />
+                            <constructor-arg value="UTF-8" />
+                        </bean>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg value="text" />
+                            <constructor-arg value="plain" />
+                            <constructor-arg value="UTF-8" />
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>-->
+        <mvc:message-converters register-defaults="false">
+            <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+            <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!-- 这里顺序不能反，一定先写text/html,不然ie下出现下载提示 -->
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
-	<!-- 视图解释类 -->
-<!--	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/templates/" />
-		<property name="suffix" value=".jsp" />
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-	</bean>-->
-	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="WEB-INF/freemarker/" />
-		<property name="defaultEncoding" value="UTF-8" />
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="template_update_delay">5</prop><!--刷新模板的周期，单位为秒 -->
-				<prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->
-				<prop key="locale">UTF-8</prop><!-- 本地化设置 -->
-				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-				<prop key="time_format">HH:mm:ss</prop>
-				<prop key="number_format">#.####</prop>
-				<prop key="boolean_format">true,false</prop>
-				<prop key="whitespace_stripping">true</prop>
-				<prop key="tag_syntax">auto_detect</prop>
-				<prop key="url_escaping_charset">UTF-8</prop>
-			</props>
-		</property>
-	</bean>
-	<bean id="viewResolver"
-		  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="viewClass"
-				  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
-		<property name="suffix" value=".ftl" />
-		<property name="contentType" value="text/html;charset=UTF-8" />
-		<property name="exposeRequestAttributes" value="true" />
-		<property name="exposeSessionAttributes" value="true" />
-		<property name="exposeSpringMacroHelpers" value="true" />
-		<property name="requestContextAttribute" value="rc"></property>
-	</bean>
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="104857600" />
-		<property name="maxInMemorySize" value="4096" />
-		<property name="defaultEncoding" value="utf-8" />
-	</bean>
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!--<property name="validationMessageSource" ref="messageSource"/>-->
+    </bean>
+    <!--<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                &lt;!&ndash; 在web环境中一定要定位到classpath 否则默认到当前web应用下找  &ndash;&gt;
+                <value>classpath:messages</value>
+                <value>classpath:org/hibernate/validator/ValidationMessages</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="false"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="cacheSeconds" value="60"/>
+    </bean>-->
+    <tx:annotation-driven/>
+    <aop:aspectj-autoproxy/>
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:redis.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 自动扫描的包名 -->
+    <context:component-scan
+            base-package="com.tshop.service,com.tshop.controller,com.tshop.log,com.tshop.dao"/>
+
+    <!-- 视图解释类 -->
+    <!--	<bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/templates/" />
+            <property name="suffix" value=".jsp" />
+            <property name="viewClass"
+                value="org.springframework.web.servlet.view.JstlView" />
+        </bean>-->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="WEB-INF/freemarker/"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">5</prop><!--刷新模板的周期，单位为秒 -->
+                <prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->
+                <prop key="locale">UTF-8</prop><!-- 本地化设置 -->
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">#.####</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="tag_syntax">auto_detect</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="requestContextAttribute" value="rc"></property>
+    </bean>
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="104857600"/>
+        <property name="maxInMemorySize" value="4096"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
 
 
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:mapping path="/admin/**" />
-			<mvc:exclude-mapping path="/user/login"/>
-			<mvc:exclude-mapping path="/user/register"/>
-			<mvc:exclude-mapping path="/user/dologin"/>
-			<mvc:exclude-mapping path="/user/dologout"/>
-			<mvc:exclude-mapping path="/user/forgetpasswd"/>
-			<mvc:exclude-mapping path="/user/dogetpasswd"/>
-			<mvc:exclude-mapping path="/user/doregister"/>
-			<mvc:exclude-mapping path="/css/**"/>
-			<mvc:exclude-mapping path="/img/**"/>
-			<mvc:exclude-mapping path="/js/**"/>
-			<bean class="com.tshop.token.LoginInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/login"/>
-			<mvc:mapping path="/user/forgetpasswd"/>
-			<mvc:mapping path="/user/register" />
-			<bean class="com.tshop.token.TokenInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/user/dologin"/>
-			<mvc:mapping path="/user/doregister"/>
-			<mvc:mapping path="/user/dogetpasswd"/>
-			<bean class="com.tshop.token.TokenValidInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
-	<!-- 对静态资源文件的访问 -->
-	<mvc:resources mapping="/jsp/**" location="/jsp/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/skin/imgs/**" location="/skin/imgs/"
-				   cache-period="31556926" />
-	<mvc:resources mapping="/images/**" location="/WEB-INF/images/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/js/**" location="/WEB-INF/js/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/css/**" location="/WEB-INF/css/"
-		cache-period="31556926" />
-	<!-- <mvc:resources mapping="/*.html" location="/" cache-period="31556926" 
-		/> -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/user/**"/>
+            <mvc:exclude-mapping path="/repet_submit"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <bean class="com.tshop.token.LoginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/forgetpasswd"/>
+            <mvc:mapping path="/user/register"/>
+            <bean class="com.tshop.token.TokenInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/doregister"/>
+            <mvc:mapping path="/user/dogetpasswd"/>
+            <bean class="com.tshop.token.TokenValidInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 对静态资源文件的访问 -->
+    <mvc:resources mapping="/jsp/**" location="/jsp/"
+                   cache-period="31556926"/>
+    <mvc:resources mapping="/skin/imgs/**" location="/skin/imgs/"
+                   cache-period="31556926"/>
+    <mvc:resources mapping="/images/**" location="/WEB-INF/images/"
+                   cache-period="31556926"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/js/"
+                   cache-period="31556926"/>
+    <mvc:resources mapping="/css/**" location="/WEB-INF/css/"
+                   cache-period="31556926"/>
+    <!-- <mvc:resources mapping="/*.html" location="/" cache-period="31556926"
+        /> -->
 
 </beans> 
