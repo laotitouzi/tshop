@@ -1,4 +1,4 @@
-package com.tshop;
+package com.tshop.utils;
 
 import com.tshop.utils.Constant;
 

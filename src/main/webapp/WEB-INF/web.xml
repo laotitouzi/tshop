@@ -29,7 +29,7 @@
 
 	<servlet>
 		<servlet-name>drawImage</servlet-name>
-		<servlet-class>com.tshop.DrawImage</servlet-class>
+		<servlet-class>com.tshop.utils.DrawImage</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>drawImage</servlet-name>

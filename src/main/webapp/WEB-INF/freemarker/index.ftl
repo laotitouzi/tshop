@@ -19,7 +19,7 @@
             <ui>
             <#list products?if_exists as product>
                 <li>
-                    <b></b><a href="/user/edit/${product.id}" title="test" target="_blank"> ${product.productName!} </a>
+                    <b></b><a href="/product/brower/${product.id}" title="test" target="_blank"> ${product.productName!} </a>
                 </li>
             </#list>
             </ui>
