@@ -2,13 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<groupId>com.tshop</groupId>
 	<version>1.0</version>
 	<artifactId>tshop</artifactId>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 
 	<name>tshop33</name>
 	<url></url>
@@ -27,7 +28,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.3.Final</version>
+			<version>5.2.4.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -226,6 +227,11 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.t</groupId>
+			<artifactId>code.generate</artifactId>
+			<version>1.0</version>
 		</dependency>
 
 	</dependencies>

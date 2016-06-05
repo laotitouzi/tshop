@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tshop.dao.ProductMapper" >
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.tshop.entity.Product" >
+    <result column="id" property="id"/>
+    <result column="category_id" property="categoryId"/>
+    <result column="product_name" property="productName"/>
+    <result column="price" property="price"/>
+    <result column="description" property="description"/>
+    <result column="discount" property="discount"/>
+</resultMap>
+       
+<!-- product table all fields -->
+<sql id="Base_Column_List" >
+     id,category_id,product_name,price,description,discount
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+    <if test="condition.id != null and condition.id != ''" >
+        and id =  #{condition.id}
+    </if>
+    <if test="condition.categoryId != null and condition.categoryId != ''" >
+        and category_id =  #{condition.categoryId}
+    </if>
+    <if test="condition.productName != null and condition.productName != ''" >
+        and product_name =  #{condition.productName}
+    </if>
+    <if test="condition.price != null and condition.price != ''" >
+        and price =  #{condition.price}
+    </if>
+    <if test="condition.description != null and condition.description != ''" >
+        and description =  #{condition.description}
+    </if>
+    <if test="condition.discount != null and condition.discount != ''" >
+        and discount =  #{condition.discount}
+    </if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="addProduct" parameterType="Product" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+    SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into product(id,category_id,product_name,price,description,discount)
+ values(#{id},#{categoryId},#{productName},#{price},#{description},#{discount})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateProduct" parameterType="Product" >
+  update product set category_id=#{categoryId},product_name=#{productName},price=#{price},description=#{description},discount=#{discount} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateProductBySelective" parameterType="Product" >
+    update product set 
+	<trim  suffixOverrides="," >
+	<if test="categoryId != null  ">
+		category_id=#{categoryId},
+	</if>
+	<if test="productName != null  ">
+		product_name=#{productName},
+	</if>
+	<if test="price != null  ">
+		price=#{price},
+	</if>
+	<if test="description != null  ">
+		description=#{description},
+	</if>
+	<if test="discount != null  ">
+		discount=#{discount},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteProductById" parameterType="Object">
+    delete 	 from product where id = #{id}
+</delete>
+
+    
+<delete id="deleteProductByIds" parameterType="Object">
+    delete 	 from product where id in #{ids}
+</delete>
+
+ 
+<!-- 根据id查询 产品 -->
+<select id="queryProductById"  resultMap="BaseResultMap" parameterType="Object">
+    select 
+   <include refid="Base_Column_List" /> 
+	 from product where id = #{id}
+</select>
+
+<!-- 产品 列表总数-->
+<select id="queryProductByCount" resultType="java.lang.Integer"  parameterType="Object">
+    select count(1) from product 
+    <include refid="Example_Where_Clause"/>
+</select>
+      
+<!-- 查询产品列表 -->
+<select id="queryProductForList" resultMap="BaseResultMap"  parameterType="Object">
+    select 
+    <include refid="Base_Column_List"/>
+    from product 
+    <include refid="Example_Where_Clause"/>
+    <if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+    <if test="limitClause != null and limitClause != ''" >
+       ${limitClause}
+    </if>
+</select>
+      
+</mapper>   

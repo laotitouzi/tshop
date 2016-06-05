@@ -1,50 +1,30 @@
 package com.tshop.service;
-
-import com.tshop.dao.ProductMapper;
 import com.tshop.entity.Product;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
+import com.tshop.page.*;
 import java.util.List;
-
 /**
- * Created by laot on 2016/5/8.
- */
-@Service("productService")
-public class ProductService {
-    @Autowired
-    private ProductMapper productMapper;
+* author: Han, Tixiang
+* createDate: 2016-06-05
+*/
 
-    public Product getProduct(String productId) {
-        return productMapper.getProduct(productId);
-    }
+public interface ProductService {
 
-    public List<Product> getHotProducts(){
-        return productMapper.getHotProducts();
-    }
+    public void addProduct(Product product);
 
-    public List<Product> getProductsByCategorId(String id){
-        return productMapper.getProductListByCategory(id);
-    }
+    public int updateProduct(Product product);
 
-    public void insertProduct(Product product){
-        productMapper.insertProduct(product);
-    }
+    public int updateProductBySelective(Product product);
 
-    public void updateProduct(Product product){
-        productMapper.updateProduct(product);
-    }
-    public List<Product> getProductListByCategory(String categoryId) {
-        return productMapper.getProductListByCategory(categoryId);
-    }
+    public int deleteProductById(Object id);
 
-    public List<Product> searchProductList(String keywords) {
-        List<Product> products = new ArrayList<Product>();
-        for(String keyword : keywords.split("\\s+")){
-            products.addAll(productMapper.searchProductList("%" + keyword.toLowerCase() + "%"));
-        }
-        return products;
-    }
+    public int deleteProductByIds(Object ids);
+
+    public int queryProductByCount(Criteria criteria);
+
+    public List queryProductForList(Criteria criteria);
+
+    public Product queryProductById(Object id);
+
+    public Page queryProductForPage(Criteria criteria) ;
+
 }

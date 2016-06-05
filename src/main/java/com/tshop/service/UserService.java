@@ -51,7 +51,7 @@ public class UserService {
     }
 
     public Page queryForPage(Criteria criteria) {
-        PageHelper.newPage(criteria.getCurrentPage(), criteria.getPageSize());
+        PageHelper.newPage(criteria);
         userMapper.getUser(criteria);
         return PageHelper.endPage();
     }

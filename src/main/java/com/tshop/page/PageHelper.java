@@ -39,8 +39,7 @@ public class PageHelper<T> implements Interceptor {
             MappedStatement mappedStatement = (MappedStatement) ReflectUtil.getFieldValue(delegate, "mappedStatement");
             Connection connection = (Connection) invocation.getArgs()[0];
             String sql = boundSql.getSql();
-            this.setTotalRecord(page,
-                    mappedStatement, connection);
+            this.setTotalRecord(obj,page,mappedStatement, connection);
             String pageSql = this.getPageSql(page, sql);
             ReflectUtil.setFieldValue(boundSql, "sql", pageSql);
             return invocation.proceed();
@@ -53,8 +52,8 @@ public class PageHelper<T> implements Interceptor {
         return invocation.proceed();
     }
 
-    public static void newPage(int currentPage, int pageSize) {
-        Page page = new Page(currentPage, pageSize);
+    public static void newPage(Criteria criteria) {
+        Page page = new Page(criteria);
         localPage.set(page);
     }
 
@@ -79,14 +78,14 @@ public class PageHelper<T> implements Interceptor {
      * @param mappedStatement Mapper映射语句
      * @param connection      当前的数据库连接
      */
-    private void setTotalRecord(Page<?> page,
+    private void setTotalRecord(Object obj,Page<?> page,
                                 MappedStatement mappedStatement, Connection connection) {
-        BoundSql boundSql = mappedStatement.getBoundSql(page);
+        BoundSql boundSql = mappedStatement.getBoundSql(obj);
         String sql = boundSql.getSql();
         String countSql = this.getCountSql(sql);
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-        BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, page);
-        ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, page, countBoundSql);
+        BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, obj);
+        ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, obj, countBoundSql);
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {

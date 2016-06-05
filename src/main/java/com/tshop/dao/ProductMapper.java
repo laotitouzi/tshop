@@ -1,21 +1,34 @@
 package com.tshop.dao;
+
+import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Param;
 import com.tshop.entity.Product;
+import com.tshop.page.*;
 import java.util.List;
+import com.tshop.page.Criteria;
+
 /**
- * @author  Han, Tixiang
- *
+ * author: Han, Tixiang
+ * createDate: 2016-06-05
  */
-public interface ProductMapper {
 
-  List<Product> getProductListByCategory(String categoryId);
+@Service("productMapper")
+public interface ProductMapper  {
 
-  Product getProduct(String productId);
+    public void addProduct(Product product);
 
-  List<Product> searchProductList(String keywords);
+    public int updateProduct(Product product);
 
-  void insertProduct(Product product);
+    public int updateProductBySelective(Product product);
 
-  void updateProduct(Product product);
+    public int deleteProductById(@Param("id") Object id);
 
-  List<Product> getHotProducts();
+    public int deleteProductByIds(@Param("ids") Object ids);
+
+    public int queryProductByCount(Criteria criteria);
+
+    public List queryProductForList(Criteria criteria);
+
+    public Product queryProductById(@Param("id") Object id);
+
 }

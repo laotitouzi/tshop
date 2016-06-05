@@ -3,6 +3,7 @@ package com.tshop.controller;
 import javax.servlet.http.HttpSession;
 
 import com.tshop.entity.Product;
+import com.tshop.page.Criteria;
 import com.tshop.service.ProductService;
 import com.tshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class IndexController {
 
 	@RequestMapping(value="/")
 	public String index(HttpSession session,Model model) {
-		List<Product> productList = productService.getProductListByCategory("1");
+		Criteria criteria = new Criteria();
+		criteria.put("category","1");
+		List<Product> productList = productService.queryProductForList(criteria);
 		model.addAttribute("products" ,productList);
 		return "index";
 	}
