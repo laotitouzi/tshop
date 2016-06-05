@@ -1,5 +1,5 @@
-<#if Session.shopUser?exists>
-    <#assign user = Session.shopUser >
+<#if Session.login_user?exists>
+    <#assign user = Session.login_user >
 </#if>
 <#if Session.errors?exists>
     <#assign errors = Session.errors >

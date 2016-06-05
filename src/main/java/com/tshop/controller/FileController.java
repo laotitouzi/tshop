@@ -18,9 +18,9 @@ import com.tshop.utils.CSVUtils;
 @RequestMapping("/file")
 public class FileController {
 
-	@Autowired
+	/*@Autowired
 	public UserService userService;
-
+*/
 	@RequestMapping("/upload")
 	public String upload(FileEntity file) {
 		MultipartFile mf = file.getCsvTradeFile();

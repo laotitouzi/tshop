@@ -8,8 +8,8 @@ $().ready(function () {
                     .append( error );
             },
             submitHandler: function (form) {
-                $("#password").val($.md5($("#password").val()));
-                $("#password2").val($.md5($("#password2").val()));
+                $("#password").val($.md5($("#password").val().trim()));
+                $("#password2").val($.md5($("#password2").val().trim()));
                 $("#registerSubmit").attr("disabled", "disabled");
 
                 var dataArr = $(form).serializeArray();

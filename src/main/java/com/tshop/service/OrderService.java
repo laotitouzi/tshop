@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Eduardo Macarron
  *
  */
-@Service
+@Service("orderService")
 public class OrderService {
 
   @Autowired

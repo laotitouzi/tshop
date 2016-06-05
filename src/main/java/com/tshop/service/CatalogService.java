@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author Eduardo Macarron
  *
  */
-@Service
+@Service("catelogService")
 public class CatalogService {
 
   @Autowired

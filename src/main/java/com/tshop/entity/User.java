@@ -20,8 +20,6 @@ public class User implements Serializable {
     @Length(max = 30,message = "用户名不能超过30字符")
     private String username;
 
-    @NotEmpty(message = "密码不能为空")
-    @Length (min = 6,message = "密码长度至少6位")
     private String password;
     private String nickname;
     private String status;

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by laot on 2016/5/8.
  */
-@Service
+@Service("productService")
 public class ProductService {
     @Autowired
     private ProductMapper productMapper;
@@ -29,12 +29,10 @@ public class ProductService {
         return productMapper.getProductListByCategory(id);
     }
 
-    @Transactional
     public void insertProduct(Product product){
         productMapper.insertProduct(product);
     }
 
-    @Transactional
     public void updateProduct(Product product){
         productMapper.updateProduct(product);
     }

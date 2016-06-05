@@ -9,4 +9,6 @@ public interface Constant {
     String TSHOP_COOKIE_NAME = "t_cookie_name";
     String ERRORS = "errors";
     String CHECKCODE = "checkcode";
+
+    String BADIC_MESSAGE_MUST_INPUT = "请输入基本信息";
 }

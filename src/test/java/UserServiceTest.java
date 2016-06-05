@@ -1,11 +1,11 @@
 import com.tshop.service.UserService;
+import com.tshop.entity.Page;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.tshop.dao.UserMapper;
 import com.tshop.entity.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,9 +18,8 @@ public class UserServiceTest {
 	@Test
 	public void insert() {
 		User u = new User();
-		u.setUserId(3);
 		u.setUsername("zhangsan");
-		u.setPassword("123");
+		u.setPassword("1");
 		u.setAddress("hangzhou");
 		u.setCity("杭州");
 		u.setCountry("中国");
@@ -30,7 +29,7 @@ public class UserServiceTest {
 		u.setPhone("188");
 		u.setState("zhejiang ");
 		u.setStatus("0");
-		userService.insertUser(u);
+		userService.addUser(u);
 
 
 
@@ -56,4 +55,23 @@ public class UserServiceTest {
 		userService.updateUser(u);*/
 		System.out.println(u.getZip());
 	}
+
+	@Test
+	public void delete(){
+		int vvv = userService.delete(12);
+		System.out.println(vvv);
+	}
+
+
+	@Test
+	public void getUserPage(){
+		Page p  = userService.queryForPage();
+
+		System.out.println(p.getPageSize());
+
+		System.out.println(p.getTotalPage());
+	}
 }
+
+
+
