@@ -33,6 +33,7 @@ public class BaseController {
     protected static String QUERY = "查询";
     protected static String OK = "成功";
     protected static String ERROR = "失败";
+    protected static String ERROR_PAGE = "/error/info";
 
     protected void putErrorsInSession(HttpServletRequest request, List<ObjectError> allErrors) {
         request.getSession().setAttribute(Constant.ERRORS, allErrors);

@@ -103,7 +103,7 @@
       (#{username},#{password},#{nickname},#{status},#{country},#{state},#{city},#{zip},#{address},#{phone},#{email})
   </insert>
 
-    <delete id="delete"  parameterType="Integer">
+    <delete id="delete"  parameterType="Object">
         delete from user where user_id = #{id}
     </delete>
 </mapper>

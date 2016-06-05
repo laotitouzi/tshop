@@ -13,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -123,5 +121,34 @@ public class UserController extends BaseController {
     @RequestMapping("/dogetpasswd")
     public String doGetasswd() {
         return "/user/forgetpasswd";
+    }
+
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject delete(@PathVariable String id){
+        if(id==null){
+           return responseError();
+        }
+
+       int record =   userService.delete(id);
+        if(record>0){
+            return resonseOk();
+        }
+
+        return responseError();
+    }
+
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String edit(@PathVariable String id){
+        if(StringUtils.isEmpty(id)){
+            return ERROR_PAGE;
+        }
+
+        User u =   userService.getUserById(id);
+        if(u==null){
+            return ERROR_PAGE;
+        }
+
+        return "/user/edit";
     }
 }

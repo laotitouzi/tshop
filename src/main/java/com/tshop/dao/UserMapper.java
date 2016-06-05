@@ -23,9 +23,9 @@ public interface UserMapper {
 
 	int updateUser(User User);
 
-	User getUserById(@Param("userId") String userId);
+	User getUserById(@Param("userId") Object id);
 
-	int delete(int id);
+	int delete(@Param("id") Object id);
 
 	List<User> getUser(Criteria criteria );
 }

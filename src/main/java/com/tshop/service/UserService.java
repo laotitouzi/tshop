@@ -42,11 +42,11 @@ public class UserService {
         userMapper.updateUser(User);
     }
 
-    public User getUserById(String userId) {
-        return userMapper.getUserById(userId);
+    public User getUserById(Object id) {
+        return userMapper.getUserById(id);
     }
 
-    public int delete(int id) {
+    public int delete(Object id) {
         return userMapper.delete(id);
     }
 
