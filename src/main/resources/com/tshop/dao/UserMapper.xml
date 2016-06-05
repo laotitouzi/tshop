@@ -24,7 +24,7 @@
         WHERE u.user_id = #{userId}
     </select>
 
-    <select id="getUser" parameterType="Page" resultType="User">
+    <select id="getUser" resultType="User">
         SELECT
         u.user_id as userId,
         u.username,

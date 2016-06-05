@@ -1,8 +1,9 @@
 package com.tshop.dao;
 
 import com.tshop.entity.User;
-import com.tshop.entity.Page;
+import com.tshop.page.Criteria;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
  * @author Han, Tixiag
  *
  */
+
+@Service("userMapper")
 public interface UserMapper {
 
 	User getUserByUsername(String username);
@@ -24,5 +27,5 @@ public interface UserMapper {
 
 	int delete(int id);
 
-	List<User> getUser(Page page);
+	List<User> getUser(Criteria criteria );
 }

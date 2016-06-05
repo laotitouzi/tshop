@@ -1,12 +1,14 @@
+import com.tshop.entity.User;
+import com.tshop.page.Page;
 import com.tshop.service.UserService;
-import com.tshop.entity.Page;
+import com.tshop.page.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.tshop.entity.User;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:application.xml") 
@@ -65,11 +67,19 @@ public class UserServiceTest {
 
 	@Test
 	public void getUserPage(){
-		Page p  = userService.queryForPage();
+		Criteria cr = new Criteria();
+
+		Page p  = userService.queryForPage(cr);
 
 		System.out.println(p.getPageSize());
 
 		System.out.println(p.getTotalPage());
+
+		List<User> list = p.getList();
+		for (User u:list
+			 ) {
+			System.out.println(u.getUsername());
+		}
 	}
 }
 

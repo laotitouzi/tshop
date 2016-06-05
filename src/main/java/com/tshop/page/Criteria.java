@@ -1,26 +1,16 @@
-package com.tshop.entity;
+package com.tshop.page;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * 公用条件查询类
  */
-public class Page <T>{
+public class Criteria {
 	/**
 	 * 存放条件查询值
 	 */
 	private Map<String, Object> condition;
-	private List<T> list;
-
-	public void setList(List<T> list) {
-		this.list = list;
-	}
-
-	public List<T> getList() {
-		return list;
-	}
 
 	/**
 	 * 是否相异
@@ -28,7 +18,6 @@ public class Page <T>{
 	protected boolean distinct;
 
 	private int currentPage = 1; // 当前页
-	private int totalCount = 0; // 总行数
 	private int pageSize = 10; // 页大小
 
 	/**
@@ -40,14 +29,14 @@ public class Page <T>{
 	 */
 	protected String limitClause;
 
-	protected Page(Page example) {
+	protected Criteria(Criteria example) {
 		this.orderByClause = example.orderByClause;
 		this.condition = example.condition;
 		this.distinct = example.distinct;
 		this.limitClause = example.limitClause;
 	}
 
-	public Page() {
+	public Criteria() {
 		condition = new HashMap<String, Object>();
 	}
 
@@ -64,9 +53,9 @@ public class Page <T>{
 	 * @param value
 	 *            查询的值
 	 */
-	public Page put(String condition, Object value) {
+	public Criteria put(String condition, Object value) {
 		this.condition.put(condition, value);
-		return (Page) this;
+		return (Criteria) this;
 	}
 
 	/**
@@ -111,29 +100,7 @@ public class Page <T>{
 		this.currentPage = currentPage;
 	}
 
-	/**
-	 * 得到总行数
-	 */
-	public int getTotalCount() {
-		return totalCount;
-	}
 
-	/**
-	 * 得到总页数
-	 * 
-	 * @return
-	 */
-	public int getTotalPage() {
-		int pageCount = this.totalCount / this.pageSize + 1;
-		// 如果模板==0，且总数大于1，则减一
-		if ((this.totalCount % this.pageSize == 0) && pageCount > 1)
-			pageCount--;
-		return pageCount;
-	}
-
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-	}
 
 	public int getPageSize() {
 		return pageSize;
