@@ -46,16 +46,8 @@ public class CacheAspect {
         Object value = redisClientTemplate.get(key);    //从缓存获取数据
         if (value != null) return value;       //如果有数据,则直接返回
         synchronized (key.intern()) {
-            Lock lock = new ReentrantLock();
-            try {
-                lock.lock();
-                if (value != null) return value;
-                value = pjp.proceed();      //跳过缓存,到后端查询数据
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
+            if (value != null) return value;
+            value = pjp.proceed();      //跳过缓存,到后端查询数据
         }
         if (cache.expire() <= 0) {      //如果没有设置过期时间,则无限期缓存
             redisClientTemplate.set(key, value, 0);
