@@ -22,8 +22,8 @@
 </style>
 <div class="container">
     <h3>用户登录</h3>
-    <form action="" method="post" style="60%" id="loginForm">
-
+    ${error!}
+    <form action="/user/dologin" method="post" style="60%" id="loginForm">
         <div class="form-group">
             <label for="username">用户名</label>
             <div class="inline-block">

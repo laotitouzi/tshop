@@ -41,7 +41,7 @@ public class UserServiceTest {
 
 	@Test
 	public void getUserById(){
-		User u = userService.getUserById("3");
+		User u = userService.getUserById("19");
 	/*	u.setUsername("我是你爷爷");
 
 		userService.updateUser(u);*/

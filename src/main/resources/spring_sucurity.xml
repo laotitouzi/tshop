@@ -1,0 +1,77 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+    <sec:http pattern="/css/**/*.css*" security="none"/>
+    <sec:http pattern="/js/**/*.js*" security="none"/>
+    <sec:http pattern="/" security="none"/>
+
+    <sec:http auto-config="true" use-expressions="true" >
+        <sec:intercept-url pattern="/user/login*" access="permitAll"/>
+        <sec:intercept-url pattern="/user/register*" access="permitAll"/>
+        <sec:intercept-url pattern="/user/dologin*" access="permitAll"/>
+        <sec:intercept-url pattern="/user/doregister*" access="permitAll"/>
+        <sec:intercept-url pattern="/user/dologout*" access="permitAll"/>
+        <sec:intercept-url pattern="/drawImage*" access="permitAll"/>
+        <sec:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+
+        <sec:intercept-url pattern="/user/delete/**" access="hasRole('ROLE_ADMIN')"/>
+        <!-- <security:anonymous enabled="true" username="guest" granted-authority="ROLE_ANONYMOUS"
+                             key="123456"></security:anonymous>-->
+        <sec:form-login login-page="/user/login"
+                        username-parameter="username"
+                        password-parameter="password" login-processing-url="/user/dologin" authentication-failure-url="/user/login?error=true"
+                        default-target-url="/" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler"/>
+        <sec:http-basic />
+        <sec:csrf disabled="true"/>
+    </sec:http>
+    <!--<sec:authentication-manager>-->
+        <!--<sec:authentication-provider>-->
+            <!--<sec:user-service>-->
+                <!--<sec:user name="hello" password="123456" authorities="ROLE_USER, ROLE_ADMIN"/>-->
+                <!--<sec:user name="zhang" password="123456" authorities="ROLE_USER"/>-->
+            <!--</sec:user-service>-->
+        <!--</sec:authentication-provider>-->
+    <!--</sec:authentication-manager>-->
+     <sec:authentication-manager alias="authenticationManager">
+         <!-- 使用可以缓存UserDetails的CachingUserDetailsService -->
+         <sec:authentication-provider
+                 user-service-ref="cachingUserDetailsService"/>
+     </sec:authentication-manager>
+
+
+    <sec:global-method-security>
+        <sec:protect-pointcut expression="execution(* com.tshop.service.*..*Service.update*(..))"
+                              access="ROLE_ADMIN"/>
+        <sec:protect-pointcut expression="execution(* com.tshop.service.*..*Service*.delete*(..))"
+                              access="ROLE_ADMIN"/>
+    </sec:global-method-security>
+
+
+    <!-- 可以缓存UserDetails的UserDetailsService -->
+    <bean id="cachingUserDetailsService"
+          class="org.springframework.security.config.authentication.CachingUserDetailsService">
+        <!-- 真正加载UserDetails的UserDetailsService -->
+        <constructor-arg ref="roleUserService"/>
+        <!-- 缓存UserDetails的UserCache -->
+        <!--<property name="userCache">-->
+        <!--<bean class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">-->
+        <!--&lt;!&ndash; 用于真正缓存的Ehcache对象 &ndash;&gt;-->
+        <!--<property name="cache" ref="ehcache4UserDetails"/>-->
+        <!--</bean>-->
+        <!--</property>-->
+    </bean>
+    <bean id="accessDeniedHandler"
+                class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+        <property name="errorPage" value="/common/403.jsp" />
+    </bean>
+    <!-- 将使用默认的CacheManager创建一个名为ehcache4UserDetails的Ehcache对象 -->
+    <!--<bean id="ehcache4UserDetails" class="org.springframework.cache.ehcache.EhCacheFactoryBean"/>-->
+    <!-- 从数据库加载UserDetails的UserDetailsService -->
+    <bean id="roleUserService"
+          class="com.tshop.service.RoleUserService">
+    </bean>
+</beans>

@@ -4,16 +4,25 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.2.xsd
 	http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-      http://www.springframework.org/schema/aop 
-    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+      http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
     <context:property-placeholder location="classpath*:*.properties"/>
-    <import resource="application_single_db.xml"/>
+   <import resource="application_single_db.xml"/>
+    <import resource="application_redis.xml"/>
+    <!--   <import resource="spring_sucurity.xml"/>
+     -->
+
+    <!-- 自动注入配置 -->
+    <aop:aspectj-autoproxy   proxy-target-class="false"/>
+    <!-- 该 BeanPostProcessor 将自动对标注 @Autowired 的 Bean 进行注入 -->
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" lazy-init="false"/>
+    <context:component-scan base-package="com.tshop" />
 
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="false">
@@ -30,15 +39,10 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
-    <!-- 自动扫描的包名 -->
-    <context:component-scan
-            base-package="com.tshop.controller,com.tshop.service,com.tshop.dao,com.tshop.token,com.tshop.entity">
-        <!--   <context:exclude-filter type="annotation"  expression="org.springframework.stereotype.Service" />-->
-    </context:component-scan>
+
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
     </bean>
-    <aop:aspectj-autoproxy/>
     <bean id="propertyPlaceholderConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -48,6 +52,7 @@
             </list>
         </property>
     </bean>
+
 
     <bean id="exceptionHandler" class="com.tshop.token.ExceptionAdvisor"></bean>
     <bean id="exceptionAotoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
@@ -128,7 +133,6 @@
             </props>
         </property>
     </bean>
-
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
