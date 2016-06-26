@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Author Han, Tixiang
@@ -43,13 +45,25 @@ public class CacheAspect {
         String key = getCacheKey(pjp, cache);
         Object value = redisClientTemplate.get(key);    //从缓存获取数据
         if (value != null) return value;       //如果有数据,则直接返回
-
-        value = pjp.proceed();      //跳过缓存,到后端查询数据
+        synchronized (key.intern()) {
+            Lock lock = new ReentrantLock();
+            try {
+                lock.lock();
+                if (value != null) return value;
+                value = pjp.proceed();      //跳过缓存,到后端查询数据
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
         if (cache.expire() <= 0) {      //如果没有设置过期时间,则无限期缓存
             redisClientTemplate.set(key, value, 0);
         } else {                    //否则设置缓存时间
             redisClientTemplate.set(key, value, cache.expire());
         }
+
+
         return value;
     }
 
